@@ -4,4 +4,6 @@ public interface ProductService {
 
     Double totalPrice(Integer startIndex, Integer endIndex);
 
+    Product save(Product product);
+
 }

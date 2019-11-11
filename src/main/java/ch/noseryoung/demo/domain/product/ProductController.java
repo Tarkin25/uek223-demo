@@ -37,4 +37,9 @@ public class ProductController {
         return new ResponseEntity<>(totalPrice, HttpStatus.OK);
     }
 
+    @PostMapping
+    public ResponseEntity<Product> save(@RequestBody Product product) {
+        return new ResponseEntity<>(productService.save(product), HttpStatus.CREATED);
+    }
+
 }

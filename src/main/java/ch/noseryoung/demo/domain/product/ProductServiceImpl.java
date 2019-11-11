@@ -15,4 +15,9 @@ public class ProductServiceImpl implements ProductService {
 
         return total;
     }
+
+    @Override
+    public Product save(Product product) {
+        return product.setId((int) (Math.random() * Integer.MAX_VALUE));
+    }
 }
