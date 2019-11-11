@@ -18,9 +18,9 @@ public class ProductController {
         return new ResponseEntity<>(Product.getProducts(), HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Product> productWithId(@PathVariable("id") Integer id) {
-        Product product = Product.getProducts().get(id-1);
+    @GetMapping("/{index}")
+    public ResponseEntity<Product> productWithId(@PathVariable("index") Integer index) {
+        Product product = Product.getProducts().get(index);
 
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
