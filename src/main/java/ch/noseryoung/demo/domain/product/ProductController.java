@@ -7,22 +7,29 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Arrays;
+import java.util.List;
+
 @RestController
 @RequestMapping("/products")
 public class ProductController {
 
-    @GetMapping
-    public ResponseEntity<String> product() {
-        String message = "Hello, I am a product";
+    private static final List<Product> PRODUCTS = Arrays.asList(
+            new Product().setId(1).setName("Lenovo ThinkPad").setPrice(1500.0),
+            new Product().setId(2).setName("MacBook Pro").setPrice(2000.0),
+            new Product().setId(3).setName("Dell X360").setPrice(1200.0)
+    );
 
-        return new ResponseEntity<>(message, HttpStatus.OK);
+    @GetMapping
+    public ResponseEntity<List<Product>> product() {
+        return new ResponseEntity<>(PRODUCTS, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<String> productWithId(@PathVariable("id") Long id) {
-        String message = "Hello, I am a product with ID " + id;
+    public ResponseEntity<Product> productWithId(@PathVariable("id") Integer id) {
+        Product product = PRODUCTS.get(id-1);
 
-        return new ResponseEntity<>(message, HttpStatus.OK);
+        return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
 }
