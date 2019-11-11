@@ -2,50 +2,37 @@ package ch.noseryoung.demo.domain.auction;
 
 import ch.noseryoung.demo.domain.product.Product;
 
+import javax.persistence.*;
 import java.sql.Date;
-import java.util.Arrays;
 import java.util.List;
 
+@Entity
+@Table(name = "auction")
 public class Auction {
 
-    private static final List<Auction> AUCTIONS = Arrays.asList(
-            new Auction()
-                    .setId(1)
-                    .setStartDate(Date.valueOf("2019-11-13"))
-                    .setEndDate(Date.valueOf("2019-11-15"))
-                    .setInstantPrice(2000.0)
-                    .setAuctionPrice(1500.0)
-                    .setProducts(Product.getProducts().subList(0, 1)),
-            new Auction()
-                    .setId(2)
-                    .setStartDate(Date.valueOf("2019-11-13"))
-                    .setEndDate(Date.valueOf("2019-11-15"))
-                    .setInstantPrice(2000.0)
-                    .setAuctionPrice(1500.0)
-                    .setProducts(Product.getProducts().subList(5, 6)),
-            new Auction()
-                    .setId(3)
-                    .setStartDate(Date.valueOf("2019-11-13"))
-                    .setEndDate(Date.valueOf("2019-11-15"))
-                    .setInstantPrice(2000.0)
-                    .setAuctionPrice(1500.0)
-                    .setProducts(Product.getProducts().subList(3, 5))
-    );
-
-    public static List<Auction> getAuctions() {
-        return AUCTIONS;
-    }
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
     private Integer id;
 
+    @Column(name = "start_date")
     private Date startDate;
 
+    @Column(name = "end_date")
     private Date endDate;
 
+    @Column(name = "instant_price")
     private Double instantPrice;
 
+    @Column(name = "auction_price")
     private Double auctionPrice;
 
+    @ManyToMany
+    @JoinTable(
+            name = "auction_product",
+            joinColumns = @JoinColumn(name = "auction_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id")
+    )
     private List<Product> products;
 
     public Integer getId() {
