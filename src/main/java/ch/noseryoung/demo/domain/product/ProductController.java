@@ -19,15 +19,13 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Product>> product() {
-        return new ResponseEntity<>(Product.getProducts(), HttpStatus.OK);
+    public ResponseEntity<List<Product>> findAll() {
+        return new ResponseEntity<>(productService.findAll(), HttpStatus.OK);
     }
 
-    @GetMapping("/{index}")
-    public ResponseEntity<Product> productWithId(@PathVariable("index") Integer index) {
-        Product product = Product.getProducts().get(index);
-
-        return new ResponseEntity<>(product, HttpStatus.OK);
+    @GetMapping("/{id}")
+    public ResponseEntity<Product> findById(@PathVariable Integer id) {
+        return new ResponseEntity<>(productService.findById(id), HttpStatus.OK);
     }
 
     @GetMapping("/total")
@@ -40,6 +38,18 @@ public class ProductController {
     @PostMapping
     public ResponseEntity<Product> save(@RequestBody Product product) {
         return new ResponseEntity<>(productService.save(product), HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Product> updateById(@PathVariable Integer id, @RequestBody Product product) {
+        return new ResponseEntity<>(productService.updateById(id, product), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteById(@PathVariable Integer id) {
+        productService.deleteById(id);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }

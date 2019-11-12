@@ -1,6 +1,7 @@
 package ch.noseryoung.demo.domain.auction;
 
 import ch.noseryoung.demo.domain.product.Product;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,19 +15,26 @@ import java.util.List;
 @RequestMapping("/auctions")
 public class AuctionController {
 
+    private AuctionService auctionService;
+
+    @Autowired
+    public AuctionController(AuctionService auctionService) {
+        this.auctionService = auctionService;
+    }
+
     @GetMapping
     public ResponseEntity<List<Auction>> findAll() {
-        return new ResponseEntity<>(Auction.getAuctions(), HttpStatus.OK);
+        return new ResponseEntity<>(auctionService.findAll(), HttpStatus.OK);
     }
 
-    @GetMapping("/{index}")
-    public ResponseEntity<Auction> findByIndex(@PathVariable Integer index) {
-        return new ResponseEntity<>(Auction.getAuctions().get(index), HttpStatus.OK);
+    @GetMapping("/{id}")
+    public ResponseEntity<Auction> findById(@PathVariable Integer id) {
+        return new ResponseEntity<>(auctionService.findById(id), HttpStatus.OK);
     }
 
-    @GetMapping("/{index}/products")
-    public ResponseEntity<List<Product>> findProductsByIndex(@PathVariable Integer index) {
-        return new ResponseEntity<>(Auction.getAuctions().get(index).getProducts(), HttpStatus.OK);
+    @GetMapping("/{id}/products")
+    public ResponseEntity<List<Product>> findProductsById(@PathVariable Integer id) {
+        return new ResponseEntity<>(auctionService.findById(id).getProducts(), HttpStatus.OK);
     }
 
 }
