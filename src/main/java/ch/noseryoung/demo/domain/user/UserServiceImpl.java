@@ -35,9 +35,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User updateById(Integer id, User user) throws NoSuchElementException {
-        if(!repository.existsById(id)) throw new NoSuchElementException();
+        User oldUser = findById(id);
 
         user.setId(id);
+        user.setAuctions(oldUser.getAuctions());
 
         return repository.save(user);
     }

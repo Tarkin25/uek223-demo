@@ -35,9 +35,10 @@ public class AuctionServiceImpl implements AuctionService {
 
     @Override
     public Auction updateById(Integer id, Auction auction) throws NoSuchElementException {
-        if(!repository.existsById(id)) throw new NoSuchElementException();
+        Auction oldAuction = findById(id);
 
         auction.setId(id);
+        auction.setProducts(oldAuction.getProducts());
 
         return repository.save(auction);
     }
